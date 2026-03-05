@@ -1,0 +1,67 @@
+:root {
+    --bg-main: #020617;
+    --lapd-blue: #0084ff;
+    --lapd-blue-glow: rgba(0, 132, 255, 0.4);
+    --glass: rgba(15, 23, 42, 0.7);
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    overflow: hidden;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 132, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 132, 255, 0.05) 0%, transparent 40%);
+}
+
+.orbitron { font-family: 'Orbitron', sans-serif; }
+
+/* Effet Verre Dépoli */
+.glass {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.active-pulse {
+    animation: pulse-green 2s infinite;
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--lapd-blue); border-radius: 10px; }
+
+/* Inputs */
+input, select, textarea {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid var(--border) !important;
+    color: white !important;
+    transition: all 0.3s;
+}
+
+input:focus {
+    border-color: var(--lapd-blue) !important;
+    box-shadow: 0 0 10px var(--lapd-blue-glow);
+}
