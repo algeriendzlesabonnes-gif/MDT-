@@ -349,6 +349,134 @@ const AccessDenied = () => <div className="p-20 text-center text-red-600 orbitro
 // --- DÉMARRAGE ---
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
+            const { useState, useEffect } = React;
+
+// --- COMPOSANT : RAPPORTS (Interventions Illimitées) ---
+const ServiceReportView = () => {
+    const [interventions, setInterventions] = useState([
+        { id: Date.now(), time: '', loc: '', type: '', note: '' }
+    ]);
+
+    const addInt = () => setInterventions([...interventions, { id: Date.now(), time: '', loc: '', type: '', note: '' }]);
+    
+    const removeInt = (id) => {
+        if (interventions.length > 1) setInterventions(interventions.filter(i => i.id !== id));
+    };
+
+    return (
+        <div className="space-y-6 animate-slide">
+            <div className="flex justify-between items-center mb-8">
+                <h2 className="orbitron text-2xl font-bold italic text-white uppercase tracking-tighter">Rédaction de Rapport</h2>
+                <div className="text-[10px] bg-blue-500/10 text-blue-400 px-4 py-2 rounded-full border border-blue-500/20 font-bold">
+                    ID RAPPORT : #{Math.floor(Math.random() * 99999)}
+                </div>
+            </div>
+
+            <div className="grid grid-cols-4 gap-4 mb-8">
+                <InputGroup label="Officier" placeholder="Nom Prénom" />
+                <InputGroup label="Badge" placeholder="#0000" />
+                <InputGroup label="Unité" placeholder="Adam-10" />
+                <InputGroup label="Secteur" placeholder="Mission Row" />
+            </div>
+
+            <div className="glass-panel p-6 rounded-3xl max-h-[500px] overflow-y-auto custom-scrollbar space-y-4 bg-black/20 border border-white/5">
+                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">Journal des Interventions</p>
+                {interventions.map((int, index) => (
+                    <div key={int.id} className="p-6 rounded-2xl bg-white/5 border border-white/5 relative group transition-all hover:bg-white/[0.07]">
+                        <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-[10px] font-black shadow-lg">
+                            {index + 1}
+                        </div>
+                        <div className="grid grid-cols-3 gap-4 mb-4 ml-4">
+                            <input className="bg-black/40 border border-white/10 rounded-lg p-3 text-xs text-white" placeholder="Heure (ex: 22:30)" />
+                            <input className="bg-black/40 border border-white/10 rounded-lg p-3 text-xs text-white" placeholder="Lieu" />
+                            <input className="bg-black/40 border border-white/10 rounded-lg p-3 text-xs text-white" placeholder="Type d'appel" />
+                        </div>
+                        <textarea className="w-full ml-4 bg-black/40 border border-white/10 rounded-xl p-4 text-xs text-white h-20" placeholder="Description détaillée..." />
+                        
+                        <button onClick={() => removeInt(int.id)} className="absolute top-4 right-4 text-red-500/50 hover:text-red-500 transition-colors">
+                            <i data-lucide="x-circle" className="w-5 h-5"></i>
+                        </button>
+                    </div>
+                ))}
+            </div>
+
+            <div className="flex gap-4">
+                <button onClick={addInt} className="flex-1 py-4 rounded-2xl border-2 border-dashed border-blue-500/20 text-blue-400 font-bold text-xs hover:bg-blue-500/5 transition-all uppercase tracking-widest">
+                    + Ajouter une intervention
+                </button>
+                <button className="flex-1 py-4 rounded-2xl bg-blue-600 text-white font-bold text-xs orbitron shadow-xl shadow-blue-600/20 hover:bg-blue-500 transition-all uppercase">
+                    Soumettre au bureau du Procureur
+                </button>
+            </div>
+        </div>
+    );
+};
+
+// --- COMPOSANT : DISPATCH (Visuel Grille) ---
+const DispatchGrid = () => (
+    <div className="grid grid-cols-4 gap-6 animate-slide">
+        <DispatchCard icon="radio" title="Radios" desc="Gestion des fréquences SO/NO" status="Online" />
+        <DispatchCard icon="map-pin" title="Citizen Search" desc="Recherche base de données" status="Active" />
+        <DispatchCard icon="file-text" title="Reports" desc="Derniers rapports soumis" count="12" />
+        <DispatchCard icon="car" title="Vehicles" desc="Plaques et modèles" count="450" />
+        <DispatchCard icon="alert-triangle" title="Search & Capture" desc="Mandats d'arrêts actifs" count="3" color="red" />
+        <DispatchCard icon="video" title="Security Cameras" desc="Accès caméras de ville" status="10 Active" />
+        <DispatchCard icon="users" title="Agents" desc="Gestion de l'effectif" status="15 Duty" />
+        <DispatchCard icon="activity" title="Radio Alpha" desc="Frequence prioritaire" status="Adam-20" />
+    </div>
+);
+
+// --- COMPOSANT : CAMÉRAS (Style image_ac683b) ---
+const CameraView = () => (
+    <div className="space-y-6 animate-slide">
+        <h2 className="orbitron text-xl font-bold text-white mb-6 uppercase italic">Surveillance Réseau</h2>
+        <div className="grid grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map(cam => (
+                <div key={cam} className="glass-panel rounded-2xl overflow-hidden border border-white/5 group">
+                    <div className="aspect-video bg-black flex items-center justify-center relative">
+                        <div className="absolute top-3 left-3 flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                            <span className="text-[9px] font-bold text-white uppercase tracking-widest">CAM-{cam} | LIVE</span>
+                        </div>
+                        <i data-lucide="video-off" className="w-10 h-10 text-white/5 group-hover:text-blue-500/20 transition-colors"></i>
+                        <div className="absolute bottom-3 right-3 text-[8px] text-white/40 font-mono italic">MISSION ROW — 12.64m</div>
+                    </div>
+                    <div className="p-4 bg-white/5 flex justify-between items-center">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Secteur Nord</span>
+                        <button className="p-2 bg-blue-600 rounded-lg"><i data-lucide="play" className="w-3 h-3 text-white"></i></button>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
+// Helpers
+const InputGroup = ({ label, placeholder }) => (
+    <div className="space-y-1">
+        <label className="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">{label}</label>
+        <input className="w-full bg-white/5 border border-white/5 p-4 rounded-xl text-xs text-white outline-none focus:border-blue-500/50 transition-all" placeholder={placeholder} />
+    </div>
+);
+
+const DispatchCard = ({ icon, title, desc, status, count, color = "blue" }) => (
+    <div className={`glass-panel p-6 rounded-3xl border border-white/5 hover:border-${color}-500/30 transition-all cursor-pointer group relative overflow-hidden`}>
+        <div className={`absolute -right-4 -bottom-4 text-${color}-500/5 group-hover:scale-110 transition-transform`}>
+            <i data-lucide={icon} className="w-24 h-24"></i>
+        </div>
+        <div className="flex items-center gap-3 mb-4">
+            <div className={`p-2 rounded-lg bg-${color}-500/10 text-${color}-400`}>
+                <i data-lucide={icon} className="w-4 h-4"></i>
+            </div>
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider">{title}</h3>
+        </div>
+        <p className="text-[10px] text-slate-500 mb-4 pr-6 leading-relaxed">{desc}</p>
+        <div className="flex justify-between items-end">
+            <span className={`text-[9px] font-black uppercase text-${color}-500 tracking-tighter`}>{status || count}</span>
+            <i data-lucide="chevron-right" className="w-3 h-3 text-slate-600 group-hover:translate-x-1 transition-transform"></i>
+        </div>
+    </div>
+);
 
 // Re-init icons after renders
 setTimeout(() => lucide.createIcons(), 500);
