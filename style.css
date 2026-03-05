@@ -65,3 +65,35 @@ input:focus {
     border-color: var(--lapd-blue) !important;
     box-shadow: 0 0 10px var(--lapd-blue-glow);
 }
+/* Effet de lueur sur les bordures comme sur ton screen Dispatch */
+.glow-blue {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.glow-red {
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Scrollbar personnalisée pour les rapports illimités */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 10px;
+}
+
+/* Background avec dégradé radial profond */
+body {
+    background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
+    min-height: 100vh;
+}
+
+/* Animation d'entrée des cartes */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide { animation: slideUp 0.5s ease-out forwards; }
